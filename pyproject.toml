@@ -23,12 +23,15 @@ packages = [
 "Changelog" = "https://github.com/bluetooth-devices/moat-ble/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 
 # Documentation Dependencies
 Sphinx = {version = "^5.0", optional = true}
 sphinx-rtd-theme = {version = "^1.0", optional = true}
 myst-parser = {version = "^0.18", optional = true}
+home-assistant-bluetooth = ">=1.4.0"
+bluetooth-sensor-state-data = ">=1.5.0"
+sensor-state-data = ">=2.0.2"
 
 [tool.poetry.extras]
 docs = [
