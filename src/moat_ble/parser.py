@@ -45,7 +45,7 @@ class MoatBluetoothDeviceData(BluetoothData):
         if "moat_s2" in service_info.name.lower():
             self.set_device_type("Moat S2")
             self.set_device_name(f"Moat S2 {short_address(address)}")
-            (temp, humi, volt) = unpack("<HHH", data[10:16])
+            temp, humi, volt = unpack("<HHH", data[10:16])
             temperature = -46.85 + 175.72 * temp / 65536.0
             humidity = -6.0 + 125.0 * humi / 65536.0
             voltage = volt / 1000
