@@ -100,3 +100,27 @@ def test_s2():
             ),
         },
     )
+
+
+def test_s2_short_service_data_does_not_crash():
+    """Truncated/crafted advertisement must not raise.
+
+    Regression for a missing length guard: a Moat S2 advertisement whose
+    service-data payload is shorter than 16 bytes made ``data[10:16]`` return
+    fewer than 6 bytes, so ``struct.unpack("<HHH", ...)`` raised an unhandled
+    ``struct.error``.
+    """
+    parser = MoatBluetoothDeviceData()
+    service_info = BluetoothServiceInfo(
+        name="Moat_S2",
+        manufacturer_data={},
+        service_data={
+            "00001000-0000-1000-8000-00805f9b34fb": b"\x00\x00\x00\x00",
+        },
+        service_uuids=["00001000-0000-1000-8000-00805f9b34fb"],
+        address="aa:bb:cc:dd:ee:ff",
+        rssi=-60,
+        source="local",
+    )
+    # Must not raise (previously: struct.error: unpack requires a buffer of 6 bytes)
+    parser.update(service_info)
